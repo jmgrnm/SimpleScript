@@ -1,0 +1,64 @@
+START_PRIME       -> STMT_PRIME
+STMT_PRIME        -> STMT STMT_PRIME
+STMT_PRIME        -> ε
+STMT              -> SIMPLE_STMT
+SIMPLE_STMT       -> DECL_STMT
+SIMPLE_STMT       -> ASSIGN_STMT
+SIMPLE_STMT       -> RETURN_STMT
+SIMPLE_STMT       -> IO_STMT
+SIMPLE_STMT       -> LITERAL
+SIMPLE_STMT       -> STOP_STMT
+SIMPLE_STMT       -> SKIP_STMT
+SIMPLE_STMT       -> FUNC_DEC
+SIMPLE_STMT       -> LOOP_STMT
+SIMPLE_STMT       -> IF_STMT
+SIMPLE_STMT       -> FUNC_CALL
+IF_STMT           -> check ( EXPR ) { STMT_PRIME }
+IF_STMT           -> check ( EXPR ) { STMT_PRIME } orcheck ( EXPR ) { STMT_PRIME }
+IF_STMT           -> check ( EXPR ) { STMT_PRIME } orcheck ( EXPR ) { STMT_PRIME } otherwise { STMT_PRIME }
+LOOP_STMT         -> repeat ( let DATA_TYPE ASSIGN_STMT EXPR ; IDENTIFIER be EXPR ) { STMT_PRIME }
+LOOP_STMT         -> while ( EXPR ) { STMT_PRIME }
+DECL_STMT         -> let DATA_TYPE IDENTIFIER ;
+DECL_STMT         -> let DATA_TYPE IDENTIFIER ;
+ASSIGN_STMT       -> IDENTIFIER be EXPR ;
+RETURN_STMT       -> return EXPR ;
+DATA_TYPE         -> string
+DATA_TYPE         -> int
+DATA_TYPE         -> float
+DATA_TYPE         -> bool
+IO_STMT           -> SHOW_FUNC
+IO_STMT           -> GIVE_FUNC
+SHOW_FUNC         -> show ( EXPR ) ;
+GIVE_FUNC         -> give ( IDENTIFIER ) ;
+FUNC_DEC          -> task RETURN_TYPE IDENTIFIER ( PARAMS ) { STMT_PRIME }
+RETURN_TYPE       -> void
+RETURN_TYPE       -> DATA_TYPE
+PARAMS            -> DATA_TYPE IDENTIFIER PARAMS_PRIME
+PARAMS            -> ε
+PARAMS_PRIME      -> , DATA_TYPE IDENTIFIER PARAMS_PRIME
+PARAMS_PRIME      -> ε
+EXPR              -> ARITH_EXPR EXPR_TAIL
+EXPR_TAIL         -> COMPARISON_OP ARITH_EXPR
+EXPR_TAIL         -> ε
+ARITH_EXPR        -> TERM ARITH_EXPR_PRIME
+ARITH_EXPR_PRIME  -> plus TERM ARITH_EXPR_PRIME
+ARITH_EXPR_PRIME  -> minus TERM ARITH_EXPR_PRIME
+ARITH_EXPR_PRIME  -> ε
+TERM              -> FACTOR TERM_PRIME
+TERM_PRIME        -> times FACTOR TERM_PRIME
+TERM_PRIME        -> over FACTOR TERM_PRIME
+TERM_PRIME        -> mod FACTOR TERM_PRIME
+TERM_PRIME        -> ε
+FACTOR            -> ( EXPR )
+FACTOR            -> IDENTIFIER
+FACTOR            -> LITERAL
+FACTOR            -> LITERAL
+COMPARISON_OP     -> is
+COMPARISON_OP     -> isnt
+COMPARISON_OP     -> less
+COMPARISON_OP     -> more
+COMPARISON_OP     -> lesseq
+COMPARISON_OP     -> moreeq
+STOP_STMT         -> stop ;
+FUNC_CALL         -> FUNC_IDENTIFIER ( EXPR EXPR_PRIME )
+FUNC_CALL_PRIME   -> , EXPR EXPR_PRIME

@@ -1,0 +1,19 @@
+let int 123invalid be 10;  | Invalid identifier (starts with a digit)
+let string @name be "John"; | Invalid identifier (contains special character)
+let float y be 3.14.15;     | Invalid float (multiple decimal points)
+let bool is_valid be maybe; | Invalid boolean (not 'yes' or 'no')
+
+check (x is 10 {            | Missing closing parenthesis
+    show("x is 10");
+}
+
+repeat (let int i be 1 to) { | Missing end value
+    show(i);
+}
+
+task add(int a, int b) {     | Missing return statement
+    a plus b;
+}
+
+let int result be add(5, 3;  | Missing closing parenthesis
+show(result);

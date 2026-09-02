@@ -1,0 +1,32 @@
+| This program calculates the factorial of a number and checks if it's even or odd.
+
+| Function to calculate factorial
+task int factorial(int n) {
+    let int result be 1;
+    repeat (let int i be 1; i lesseq n; i be i plus 1) {
+        result be result times i;
+    }
+    give result;
+}
+
+| Function to check if a number is even or odd
+task string check_even_odd(int num) {
+    check (num mod 2 is 0) {
+        give "even";
+    } otherwise {
+        give "odd";
+    }
+}
+
+| Main program logic
+let int number be ask("Enter a number to calculate its factorial: ");
+let int fact be factorial(number);
+show("The factorial of ");
+show(number);
+show(" is: ");
+show(fact);
+
+let string even_odd be check_even_odd(fact);
+show("The factorial is ");
+show(even_odd);
+show(".");

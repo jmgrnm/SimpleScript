@@ -1,0 +1,117 @@
+package lib.src.parseutil;
+
+import lib.src.tokenutil.Token;
+
+public class Items {
+    private Token token;
+    private Terminal terminal;
+    private NonTerminal nonTerminal;
+    private boolean terminalStatus;
+
+    public Items(Token token) {
+        this.token = token;
+    }
+
+    public ItemType getType() {
+        switch (token.getType()) {
+
+            case FUNCTION:
+                switch (token.getLexeme()) {
+                    case "task": return ItemType.task;
+                    case "give": return ItemType.give;
+                    case "show": return ItemType.show;
+                    case "return": return ItemType.return_;
+                }
+                break;
+
+            case ASSIGNMENT:
+                switch (token.getLexeme()) {
+                    case "let": return ItemType.let;
+                    case "be": return ItemType.be;
+                }
+                break;
+
+            case CONDITIONAL:
+                switch (token.getLexeme()) {
+                    case "check": return ItemType.check;
+                    case "orcheck": return ItemType.orcheck;
+                    case "otherwise": return ItemType.otherwise;
+                    case "stop": return ItemType.stop;
+                    case "skip": return ItemType.skip;
+                }
+                break;
+
+            case DATA_TYPE:
+                switch (token.getLexeme()) {
+                    case "int": return ItemType.int_;
+                    case "float": return ItemType.float_;
+                    case "string": return ItemType.string;
+                    case "bool": return ItemType.bool;
+                }
+                break;
+
+            case LITERAL:
+                if (token.getLexeme().equals("yes")) return ItemType.yes;
+                if (token.getLexeme().equals("no")) return ItemType.no;
+                if (token.getLexeme().matches("\\d+")) return ItemType.int_literal;
+                if (token.getLexeme().matches("\\d+\\.\\d+")) return ItemType.float_literal;
+                if (token.getLexeme().matches("\".*\"")) return ItemType.string_literal;
+                break;
+
+            case IDENTIFIER:
+                return ItemType.id;
+
+            case ARITHMETIC_OP:
+                switch (token.getLexeme()) {
+                    case "plus": return ItemType.plus;
+                    case "minus": return ItemType.minus;
+                    case "times": return ItemType.times;
+                    case "over": return ItemType.over;
+                    case "mod": return ItemType.mod;
+                }
+                break;
+
+            case LOGICAL_OP:
+                switch (token.getLexeme()) {
+                    case "and": return ItemType.and;
+                    case "or": return ItemType.or;
+                    case "not": return ItemType.not;
+                }
+                break;
+
+            case COMPARISON_OP:
+                switch (token.getLexeme()) {
+                    case "is": return ItemType.is;
+                    case "isnt": return ItemType.isnt;
+                    case "less": return ItemType.less;
+                    case "more": return ItemType.more;
+                    case "lesseq": return ItemType.lesseq;
+                    case "moreeq": return ItemType.moreeq;
+                }
+                break;
+
+            case PUNCTUATION:
+                switch (token.getLexeme()) {
+                    case "(": return ItemType.lparen;
+                    case ")": return ItemType.rparen;
+                    case "{": return ItemType.lbrace;
+                    case "}": return ItemType.rbrace;
+                    case ";": return ItemType.semicolon;
+                    case ",": return ItemType.comma;
+                    case ".": return ItemType.dot;
+                }
+                break;
+            default: error()
+        }
+
+        return null; // Or throw an error if unexpected token
+    }
+
+    public void setTerminalStatus(boolean terminalStatus) {
+        this.terminalStatus = terminalStatus;
+    }
+
+    public boolean isTerminal() {
+        return terminalStatus;
+    }
+}
